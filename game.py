@@ -2,12 +2,13 @@
 
 import pygame
 from sys import exit
+from pygame.locals import *
 
 
 #初始化pygame,为使用硬件做准备
 pygame.init()
 #创建了一个窗口,窗口大小和背景图片大小一样
-screen = pygame.display.set_mode((1000, 750), 0, 32) 
+screen = pygame.display.set_mode((666, 500), 0, 32) 
 #设置窗口标题
 pygame.display.set_caption("Hello, World!")
 #加载并转换图像
@@ -15,6 +16,9 @@ background1 = pygame.image.load('py1.png').convert()
 background2 = pygame.image.load('py2.png').convert()
 pic=1
 background = background1
+
+#设置全屏
+Fullscreen = False
 
 
 #游戏主循环
@@ -32,6 +36,13 @@ while True:
                      else:
                             background = background2
                             pic=1
+              if event.type == KEYDOWN:
+                     if event.key == K_f:
+                            Fullscreen = not Fullscreen
+                            if Fullscreen:
+                                   screen = pygame.display.set_mode((666, 500), FULLSCREEN, 32)
+                            else:
+                                   screen = pygame.display.set_mode((666, 500), 0, 32) 
                             
                      
               
