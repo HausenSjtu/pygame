@@ -14,8 +14,8 @@ class Tortoise:
     def __init__(self,num):
         self.x = 250
         self.y = 100 -10 *num
-        self.zoomdx = (0.2*num+0.2)*2
-        self.zoomdy = (0.05*num+0.05)*2
+        self.zoomdx = (0.2*num+0.2)
+        self.zoomdy = (0.05*num+0.05)
         #0:big   1:small   -1:end
         self.zoomFlag = 1
         #0: not start    1: moving   -1:end
