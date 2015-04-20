@@ -1,0 +1,3 @@
+zoom_pos:100 focus_pos:0
+zoom_pos:100 focus_pos:1
+zoom_pos:200 focus_pos:2
