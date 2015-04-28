@@ -14,8 +14,8 @@ class Tortoise:
     def __init__(self,num):
         self.x = 250
         self.y = 100 -10 *num
-        self.zoomdx = (0.2*num+0.2)
-        self.zoomdy = (0.05*num+0.05)
+        self.zoomdx = (0.2*num+0.2)*0.5
+        self.zoomdy = (0.05*num+0.05)*0.5
         #0:big   1:small   -1:end
         self.zoomFlag = 1
         #0: not start    1: moving   -1:end
@@ -25,8 +25,8 @@ class Tortoise:
         self.height = 100
         self.maxWidth = self.width
         self.maxHeight = self.height
-        self.minWidth = self.maxWidth/2
-        self.minHeight = self.maxHeight/2
+        self.minWidth = self.maxWidth/4
+        self.minHeight = self.maxHeight/4
         self.rec = [self.x - self.width/2, self.y - self.height/2, self.width, self.height]
         self.col = [(num%3==0)*255,(num%3==1)*255,(num%3==2)*255]
 
