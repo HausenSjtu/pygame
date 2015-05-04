@@ -5,7 +5,7 @@ from pygame.locals import *
 #
 from sys import exit
 #
-pygame.init()
+
 #
 
 
@@ -54,7 +54,7 @@ class Tortoise:
                 self.zoomFlag = 0
         self.rec = [self.x - self.width/2, self.y - self.height/2, self.width, self.height]
         
-
+pygame.init()
 
 
 f_score = file('scoreForWugui.txt')
@@ -127,21 +127,7 @@ while True:
 	                t[tIndex].zoomFlag = -1
 	                t[tIndex].moveFlag = 1
 	        else:
-	            x, y = pygame.mouse.get_pos()
-	            if x>150 and x<350 and y>150 and y<200:
-	            	# new game
-	            	i=1
-	            elif x>150 and x<350 and y>250 and y<300:
-	            	# show the score information
-	            	scoreNum = min(5,len(scoreLines))
-	            	text1 = font.render("playerName\tgameNum\tscore", 1, (0, 0, 0))
-            		screen.blit(text1[i], (0, 20)) 
-            		i = 1
-	            	for playerName in playersInform.keys():
-	            		inform = playersInform[playerName]
-	  					text123= font.render('h' , 1, (0, 0, 0))
-	            		screen.blit(text123, (0, 20+i*20))
-	            		i += 1	
+                    pass
 
 
         if event.type == KEYDOWN:
