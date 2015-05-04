@@ -83,7 +83,8 @@ newGamePic = pygame.image.load('newGame.png').convert()
 
 font = pygame.font.Font(None, 32)
 
-
+#surface
+#bland_surface = pygame.Surface((100,100))
 sur = pygame.surface.Surface((200, 200))
 
 
@@ -104,8 +105,10 @@ t[0].visible = True
 
 
 while True:
+#
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            #
             pygame.quit()
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -132,13 +135,13 @@ while True:
 	            	# show the score information
 	            	scoreNum = min(5,len(scoreLines))
 	            	text1 = font.render("playerName\tgameNum\tscore", 1, (0, 0, 0))
-            		screen.blit(text1[i], (0, 40)) 
+            		screen.blit(text1[i], (0, 20)) 
             		i = 1
-	       #      	for playerName in playersInform.keys():
-	       #      		inform = playersInform[playerName]
-	  					# text123= font.render('h' , 1, (0, 0, 0))
-	       #      		screen.blit(text123, (0, 20+i*20))
-	       #      		i += 1	
+	            	for playerName in playersInform.keys():
+	            		inform = playersInform[playerName]
+	  					text123= font.render('h' , 1, (0, 0, 0))
+	            		screen.blit(text123, (0, 20+i*20))
+	            		i += 1	
 
 
         if event.type == KEYDOWN:
@@ -156,12 +159,44 @@ while True:
                 
 
 
-
+	screen.blit(background, (0,0))
     
-    screen.fill((255, 255, 255))
-
+  #  text1 = font.render("your game: %d\tyour score%d" % (playerGame, playerScore), 1, (0, 0, 0))
 	
+  	if gameStart == True:
+	    text2 = font.render("result:" +result, 1, (0, 0, 0))
 
+
+
+	    screen.blit(text2, (0, 20))
+
+	    if t[tIndex].zoomFlag !=-1:
+	        t[tIndex].zoom()
+
+	    if t[tIndex].moveFlag == 1:
+	        t[tIndex].move(button)
+	    elif t[tIndex].moveFlag == -1:
+	        button -= t[tIndex].height
+	        if widthRange <= t[tIndex].width:
+	            result = "Failed"
+	        else:
+	            if tIndex ==4:
+	                result = "You win~"
+	            else:
+	                widthRange = t[tIndex].width
+	                tIndex +=1
+	                tIndex = tIndex %5
+	                t[tIndex].visible = True
+
+	    for i in range(num):
+	        if t[i].visible == True:
+	            pygame.draw.rect(screen,t[i].col,t[i].rec)
+
+	    if result == "Failed" or result =="You win~":
+	        screen.blit(once_more,(200,200))
+	else:
+		screen.blit(newGamePic,(150,150))
+		screen.blit(scoreInformPic,(150,250))
     
     
     pygame.display.update()
