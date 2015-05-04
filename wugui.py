@@ -106,6 +106,7 @@ t[0].visible = True
 
 while True:
 #
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             #
@@ -137,11 +138,11 @@ while True:
 	            	text1 = font.render("playerName\tgameNum\tscore", 1, (0, 0, 0))
             		screen.blit(text1[i], (0, 20)) 
             		i = 1
-	            	for playerName in playersInform.keys():
-	            		inform = playersInform[playerName]
-	  					text123= font.render('h' , 1, (0, 0, 0))
-	            		screen.blit(text123, (0, 20+i*20))
-	            		i += 1	
+	       #      	for playerName in playersInform.keys():
+	       #      		inform = playersInform[playerName]
+	  					# text123= font.render('h' , 1, (0, 0, 0))
+	       #      		screen.blit(text123, (0, 20+i*20))
+	       #      		i += 1	
 
 
         if event.type == KEYDOWN:
@@ -159,10 +160,10 @@ while True:
                 
 
 
-	screen.blit(background, (0,0))
+	
     
   #  text1 = font.render("your game: %d\tyour score%d" % (playerGame, playerScore), 1, (0, 0, 0))
-	
+	screen.blit(background, (0,0))
   	if gameStart == True:
 	    text2 = font.render("result:" +result, 1, (0, 0, 0))
 
