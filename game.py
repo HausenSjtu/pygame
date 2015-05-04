@@ -29,8 +29,10 @@ background = background1
 
 
 rec = (10,10,100,200)
-
-
+
+
+
+
 #设置全屏
 
 Fullscreen = False
@@ -38,6 +40,7 @@ Fullscreen = False
 
 #游戏主循环
 while True:
+       screen.blit(background, (0,0))
        for event in pygame.event.get():
               #接收到退出事件后退出程序
               if event.type == pygame.QUIT:
@@ -63,7 +66,6 @@ while True:
               
                      
        #将背景图画上去
-       screen.blit(background, (0,0))
        pygame.draw.ellipse(screen,(0,0,255),rec)
        pygame.draw.line(screen,(255,255,255),(200,200),(400,400),5)
        

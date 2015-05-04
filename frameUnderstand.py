@@ -30,8 +30,8 @@ while True:
     screen.blit(sprite, (x, 100))    
 
     time_passed = clock.tick()
+    print time_passed
     time_passed_seconds = time_passed / 1000.0
-
     distance_moved = time_passed_seconds * speed
     x += distance_moved
 
