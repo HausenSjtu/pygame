@@ -4,6 +4,9 @@ import pygame
 from sys import exit
 from pygame.locals import *
 
+##import cv2
+##import numpy
+
 
 #初始化pygame,为使用硬件做准备
 pygame.init()
@@ -16,9 +19,21 @@ background1 = pygame.image.load('py1.png').convert()
 background2 = pygame.image.load('py2.png').convert()
 pic=1
 background = background1
+
+
+# try for the cv2
+##img = cv2.imread('white.png')
+##print img.shape
+##
+##print img
+
+
+rec = (10,10,100,200)
 
-#设置全屏
-Fullscreen = False
+
+#设置全屏
+
+Fullscreen = False
 
 
 #游戏主循环
@@ -49,6 +64,8 @@ while True:
                      
        #将背景图画上去
        screen.blit(background, (0,0))
+       pygame.draw.ellipse(screen,(0,0,255),rec)
+       pygame.draw.line(screen,(255,255,255),(200,200),(400,400),5)
        
        #刷新一下画面
        pygame.display.update()

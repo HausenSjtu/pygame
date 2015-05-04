@@ -2,11 +2,11 @@
 
 import pygame
 from pygame.locals import *
-#导入pygame库
+#
 from sys import exit
-#向sys模块借一个exit函数用来退出程序
+#
 pygame.init()
-#初始化pygame,为使用硬件做准备
+#
 
 
 
@@ -57,18 +57,31 @@ class Tortoise:
 
 
 
+f_score = file('scoreForWugui.txt')
+scoreLines = f_score.readlines()
+f_score.close()
+
+playersInform = {}
+
+for line in scoreLines:
+    data =  line.split('\t') 
+    playersInform[data[0]] = data[1:3]
+
+print playersInform
 
 
 screen = pygame.display.set_mode((500, 500), 0, 32)
-#创建了一个窗口,窗口大小和背景图片大小一样
+#
 pygame.display.set_caption("Hello, World!")
-#设置窗口标题
+#
 background = pygame.image.load('white.png').convert()
 once_more = pygame.image.load("once_more.png").convert()
-#加载并转换图像
+scoreInformPic = pygame.image.load('scoreInform.png').convert()
+wYNPic = pygame.image.load('wYN.png').convert()
+newGamePic = pygame.image.load('newGame.png').convert()
+#
 
 font = pygame.font.Font(None, 32)
-times = 0
 
 #surface
 #bland_surface = pygame.Surface((100,100))
@@ -78,6 +91,7 @@ sur = pygame.surface.Surface((200, 200))
 #parameter
 result="playing"
 Fullscreen = False
+gameStart = False
 
 #num of tortoise
 button = 500
@@ -91,76 +105,99 @@ t[0].visible = True
 
 
 while True:
-#游戏主循环
+#
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            #接收到退出事件后退出程序
+            #
             pygame.quit()
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if result == "Failed" or result =="You win~":
-                x, y = pygame.mouse.get_pos()
-                if x<=300 and x>=200 and y>200 and y<=300:
-                    for i in range(num):
-                        t[i]=Tortoise(i)
-                    tIndex = 0
-                    result = "playing"
-                    button = 500
-                    widthRange = 500
-                    t[0].visible = True
-            else:
-                times += 1
-                t[tIndex].zoomFlag = -1
-                t[tIndex].moveFlag = 1
+        	if gameStart == True:
+	            if result == "Failed" or result =="You win~":
+	                x, y = pygame.mouse.get_pos()
+	                if x<=300 and x>=200 and y>200 and y<=300:
+	                    for i in range(num):
+	                        t[i]=Tortoise(i)
+	                    tIndex = 0
+	                    result = "playing"
+	                    button = 500
+	                    widthRange = 500
+	                    t[0].visible = True
+	            else:
+	                t[tIndex].zoomFlag = -1
+	                t[tIndex].moveFlag = 1
+	        else:
+	            x, y = pygame.mouse.get_pos()
+	            if x>150 and x<350 and y>150 and y<200:
+	            	# new game
+	            	i=1
+	            elif x>150 and x<350 and y>250 and y<300:
+	            	# show the score information
+	            	scoreNum = min(5,len(scoreLines))
+	            	text1 = font.render("playerName\tgameNum\tscore", 1, (0, 0, 0))
+            		screen.blit(text1[i], (0, 20)) 
+            		i = 1
+	            	for playerName in playersInform.keys():
+	            		inform = playersInform[playerName]
+	  					text123= font.render('h' , 1, (0, 0, 0))
+	            		screen.blit(text123, (0, 20+i*20))
+	            		i += 1	
+
+
         if event.type == KEYDOWN:
-            if event.key == K_SPACE:
-                times += 1
-                t[tIndex].zoomFlag = -1
-                t[tIndex].moveFlag = 1
-            if event.key == K_f:
-                Fullscreen = not Fullscreen
-                if Fullscreen:
-                    screen = pygame.display.set_mode((500, 500), FULLSCREEN, 32)
-                else:
-                    screen = pygame.display.set_mode((500, 500), 0, 32)
+        	if gameStart == True:
+	            if event.key == K_SPACE:
+	                times += 1
+	                t[tIndex].zoomFlag = -1 
+	                t[tIndex].moveFlag = 1
+	            if event.key == K_f:
+	                Fullscreen = not Fullscreen
+	                if Fullscreen:
+	                    screen = pygame.display.set_mode((500, 500), FULLSCREEN, 32)
+	                else:
+	                    screen = pygame.display.set_mode((500, 500), 0, 32)
                 
 
 
+	screen.blit(background, (0,0))
     
-    text1 = font.render("mouse button done: %d" % times, 1, (0, 0, 0))
-    text2 = font.render("result:" +result, 1, (0, 0, 0))
+  #  text1 = font.render("your game: %d\tyour score%d" % (playerGame, playerScore), 1, (0, 0, 0))
+	
+  	if gameStart == True:
+	    text2 = font.render("result:" +result, 1, (0, 0, 0))
 
+
+
+	    screen.blit(text2, (0, 20))
+
+	    if t[tIndex].zoomFlag !=-1:
+	        t[tIndex].zoom()
+
+	    if t[tIndex].moveFlag == 1:
+	        t[tIndex].move(button)
+	    elif t[tIndex].moveFlag == -1:
+	        button -= t[tIndex].height
+	        if widthRange <= t[tIndex].width:
+	            result = "Failed"
+	        else:
+	            if tIndex ==4:
+	                result = "You win~"
+	            else:
+	                widthRange = t[tIndex].width
+	                tIndex +=1
+	                tIndex = tIndex %5
+	                t[tIndex].visible = True
+
+	    for i in range(num):
+	        if t[i].visible == True:
+	            pygame.draw.rect(screen,t[i].col,t[i].rec)
+
+	    if result == "Failed" or result =="You win~":
+	        screen.blit(once_more,(200,200))
+	else:
+		screen.blit(newGamePic,(150,150))
+		screen.blit(scoreInformPic,(150,250))
     
-    screen.blit(background, (0,0))
-
-    screen.blit(text1, (0, 0))
-    screen.blit(text2, (0, 20))
-
-    if t[tIndex].zoomFlag !=-1:
-        t[tIndex].zoom()
-
-    if t[tIndex].moveFlag == 1:
-        t[tIndex].move(button)
-    elif t[tIndex].moveFlag == -1:
-        button -= t[tIndex].height
-        if widthRange <= t[tIndex].width:
-            result = "Failed"
-        else:
-            if tIndex ==4:
-                result = "You win~"
-            else:
-                widthRange = t[tIndex].width
-                tIndex +=1
-                tIndex = tIndex %5
-                t[tIndex].visible = True
-
-    for i in range(num):
-        if t[i].visible == True:
-            pygame.draw.rect(screen,t[i].col,t[i].rec)
-
-    if result == "Failed" or result =="You win~":
-        screen.blit(once_more,(200,200))
-
     
     pygame.display.update()
-    #刷新一下画面
+    #
