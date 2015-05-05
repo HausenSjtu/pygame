@@ -16,9 +16,12 @@ background1 = pygame.image.load('py1.png').convert()
 background2 = pygame.image.load('py2.png').convert()
 pic=1
 background = background1
-
-#设置全屏
-Fullscreen = False
+
+
+
+#设置全屏
+
+Fullscreen = False
 
 
 #游戏主循环
@@ -48,7 +51,8 @@ while True:
               
                      
        #将背景图画上去
-       screen.blit(background, (0,0))
+       #screen.blit(background, (0,0))
+       screen.fill((255, 255, 255))
        
        #刷新一下画面
        pygame.display.update()
